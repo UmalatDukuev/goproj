@@ -8,4 +8,5 @@ func main() {
 	websites["itProger"] = 4
 	websites["Yandex"] = 5
 	fmt.Println(websites["itProger"])
+	fmt.Println("333")
 }
