@@ -9,6 +9,4 @@ func main() {
 	websites["Yandex"] = 5
 	fmt.Println(websites["itProger"])
 	fmt.Println("333")
-	fmt.Println(websites["itProger"])
-	fmt.Println("444")
 }
