@@ -1,9 +1,18 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
+)
+
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "postgres"
+	password = "03795"
+	dbname   = "users"
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -27,6 +36,15 @@ func save_article(w http.ResponseWriter, r *http.Request) {
 	anons := r.FormValue("anons")
 	full_text := r.FormValue("full_text")
 
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
 }
 
 func handleFunc() {
@@ -34,7 +52,6 @@ func handleFunc() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/create", create)
 	http.HandleFunc("/save_article", save_article)
-
 	http.ListenAndServe(":8080", nil)
 }
 
