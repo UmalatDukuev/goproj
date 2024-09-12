@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -43,8 +45,14 @@ func save_article(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
 	defer db.Close()
+
+	insert, err := db.Query("INSERT INTO articles (title, anons, full_text) VALUES ($1, $2, $3)", title, anons, full_text)
+	if err != nil {
+		panic(err)
+	}
+	defer insert.Close()
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func handleFunc() {
@@ -52,7 +60,7 @@ func handleFunc() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/create", create)
 	http.HandleFunc("/save_article", save_article)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8085", nil)
 }
 
 func main() {
