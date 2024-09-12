@@ -1,3 +1,9 @@
 body {
     background: red;
 }
+
+.center_class {
+    width: 50%;
+    margin: 0 auto;
+    /* display: block; */
+}
