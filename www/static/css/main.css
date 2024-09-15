@@ -1,9 +1,6 @@
-body {
-    background: red;
-}
-
 .center_class {
     width: 50%;
+    /* Задаем ширину в половину страницы */
     margin: 0 auto;
-    /* display: block; */
+    /* Центрируем контейнер */
 }
