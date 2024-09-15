@@ -1,0 +1,15 @@
+{{ define "show"}}
+
+{{ template "header" }}
+<main role="main" class="inner cover">
+    <div class="center_class">
+        <h1>{{ .Title }}</h1>
+        <br>
+        <h3>{{ .FullText }}</h3>
+        <a href="/" class="btn btn-lg btn-secondary">Назад</a>
+
+    </div>
+</main>
+{{ template "footer" }}
+
+{{ end }}
