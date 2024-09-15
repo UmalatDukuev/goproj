@@ -1,4 +1,5 @@
-.center_class {
+.center_class,
+.window1 {
     width: 50%;
     /* Задаем ширину в половину страницы */
     margin: 0 auto;
@@ -6,5 +7,5 @@
 }
 
 .window1 {
-    background-color: bisque;
+    background-color: #f8d7da;
 }
