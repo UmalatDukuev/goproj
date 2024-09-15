@@ -97,7 +97,7 @@ func save_article(w http.ResponseWriter, r *http.Request) {
 
 func show_post(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	fmt.Fprintf(w, "Id: %v\n", vars["id"])
+	//fmt.Fprintf(w, "Id: %v\n", vars["id"])
 
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -108,18 +108,12 @@ func show_post(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	//	insert, err := db.Query(fmt.Sprintf("SELECT * FROM articles WHERE id=$1", vars["id"]))
-	insert, err := db.Query(fmt.Sprintf("SELECT * FROM articles"))
-
+	showPost = Article{}
+	insert, err := db.Query("SELECT * FROM articles WHERE id=$1", vars["id"])
 	if err != nil {
 		panic(err)
 	}
 	defer insert.Close()
-	t, err := template.ParseFiles("templates/show.html", "templates/header.html", "templates/footer.html")
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
-	showPost = Article{}
 	for insert.Next() {
 		var post Article
 		err = insert.Scan(&post.Id, &post.Title, &post.Anons, &post.FullText)
@@ -128,6 +122,9 @@ func show_post(w http.ResponseWriter, r *http.Request) {
 		}
 		showPost = post
 	}
+	t, _ := template.ParseFiles("templates/show.html", "templates/header.html", "templates/footer.html")
+	// fmt.Println(showPost.Id)
+	// fmt.Println(showPost.Anons)
 
 	t.ExecuteTemplate(w, "show", showPost)
 

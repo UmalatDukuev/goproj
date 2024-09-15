@@ -4,3 +4,7 @@
     margin: 0 auto;
     /* Центрируем контейнер */
 }
+
+.window1 {
+    background-color: bisque;
+}
